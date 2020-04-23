@@ -1,16 +1,50 @@
-import React, { useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import io from "socket.io-client";
 import "./App.css";
 
-function App() {
-  useEffect(() => {
-    axios("/users").then((res) => {
-      console.log(res);
-    });
-  }, []);
+import Header from "./components/header.js";
+import Login from "./components/login.js";
+import Chatview from "./components/chatview.js";
 
-  return <div className="App"><h1>MY CHAT APP</h1></div>;
+// Make connection
+const socket = io("http://localhost:8080");
+
+export default function App() {
+  const [username, setUsername] = useState("Anna");
+  const [inputValue, setInputValue] = useState("");
+
+  function handleLogin(e) {
+    e.preventDefault();
+    if (inputValue.trim().length === 0) {
+      setInputValue("");
+      return;
+    }
+    setUsername(inputValue);
+  }
+
+  function handleChange(e) {
+    setInputValue(e.target.value);
+  }
+
+  function handleLogout() {
+    setUsername("");
+    setInputValue("");
+  }
+
+  let login = (
+    <Login
+      handleChange={handleChange}
+      handleLogin={handleLogin}
+      inputValue={inputValue}
+    />
+  );
+
+  let chatview = <Chatview username={username} handleLogout={handleLogout} />;
+
+  return (
+    <div className="App">
+      <Header />
+      {username ? chatview : login}
+    </div>
+  );
 }
-
-export default App;
