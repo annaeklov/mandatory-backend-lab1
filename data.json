@@ -1,0 +1,47 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "roomName": "Sex and the City",
+            "messages": [
+                {
+                    "id": 1,
+                    "user": "Anna",
+                    "message": "SHOOOOPPING"
+                },
+                {
+                    "id": 2,
+                    "user": "Lina",
+                    "message": "SKUUUMPAA"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "roomName": "Coding",
+            "messages": [
+                {
+                    "id": 1,
+                    "user": "Pelle",
+                    "message": "Tjenare"
+                },
+                {
+                    "id": 2,
+                    "user": "Jonas",
+                    "message": "JÖÖÖÖÖ"
+                }
+
+            ]
+        }
+    ]
+}
+
+
+
+
+
+
+
+
+
+
