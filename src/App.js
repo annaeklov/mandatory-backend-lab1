@@ -39,7 +39,9 @@ export default function App() {
     />
   );
 
-  let chatview = <Chatview username={username} handleLogout={handleLogout} />;
+  let chatview = (
+    <Chatview socket={socket} username={username} handleLogout={handleLogout} />
+  );
 
   return (
     <div className="App">

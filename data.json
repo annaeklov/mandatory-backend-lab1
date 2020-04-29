@@ -1,16 +1,14 @@
 {
-    "data": [
-        {
+    "data": [{
             "id": 1,
             "roomName": "Sex and the City",
-            "messages": [
-                {
-                    
+            "messages": [{
+
                     "user": "Anna",
                     "message": "SHOOOOPPING"
                 },
                 {
-                    
+
                     "user": "Lina",
                     "message": "SKUUUMPAA"
                 }
@@ -19,14 +17,13 @@
         {
             "id": 2,
             "roomName": "Coding",
-            "messages": [
-                {
-                    
+            "messages": [{
+
                     "user": "Pelle",
                     "message": "Tjenare"
                 },
                 {
-                    
+
                     "user": "Jonas",
                     "message": "JÖÖÖÖÖ"
                 }
@@ -35,13 +32,3 @@
         }
     ]
 }
-
-
-
-
-
-
-
-
-
-

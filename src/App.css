@@ -2,4 +2,24 @@
   text-align: center;
 }
 
+.chatview__chooseRooms{
+  display: inline-block;
+  margin: 10px;
+  width: 100px;
+  height: 200px;
+  border: 1px solid black;
+}
+
+.chatview__inner {
+  display: inline-block;
+  margin: 10px;
+  width: 300px;
+  height: 400px;
+  border: 1px solid black;
+}
+
+textarea {
+  width: 200px;
+  height: 100px;
+}
 
