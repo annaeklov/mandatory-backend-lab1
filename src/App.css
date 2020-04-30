@@ -2,12 +2,19 @@
   text-align: center;
 }
 
+a{
+  cursor: pointer;
+}
+
+a:hover{
+  text-decoration: underline;
+}
+
 .chatview__chooseRooms{
   display: inline-block;
   margin: 10px;
-  width: 100px;
+  width: 200px;
   height: 200px;
-  border: 1px solid black;
 }
 
 .chatview__inner {
@@ -22,4 +29,6 @@ textarea {
   width: 200px;
   height: 100px;
 }
+
+
 

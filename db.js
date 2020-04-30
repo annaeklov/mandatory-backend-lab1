@@ -40,8 +40,27 @@ async function createNewRoom(newRoom) {
   }
 }
 
+async function deleteRoom(roomId) {
+  try {
+    const result = await db
+      .collection("roomsCollection")
+      .deleteOne({ _id: ObjectId(roomId) });
+    if (result.length) {
+      return "Success in deleting a room";
+    }
+    return "Could not find room";
+  } catch (error) {
+    console.log("Error", error);
+    throw error;
+  }
+}
+
+async function saveMessage() {}
+
 module.exports.getAllRooms = getAllRooms;
 module.exports.createNewRoom = createNewRoom;
+module.exports.deleteRoom = deleteRoom;
+module.exports.saveMessage = saveMessage;
 
 /* module.exports = {
   getClient: function () {

@@ -21,22 +21,33 @@ app.get("/rooms", async (req, res) => {
   }
 });
 
-// kanske måste getOneRoom ändå, pga om det ska funka med querysträng. det gör det inte nu. 
-
 app.post("/rooms", async (req, res) => {
-  if(!req.body === String){
+  if (!req.body.data === String) {
     return res.status(400).end(); // kolla rätt statuskod, kanske mer säker
   }
   let newRoom = {
-    roomName: req.body,
-    messages: []
+    roomName: req.body.data,
+    messages: [],
+    isDefault: false,
   };
   const data = await MONGO_DB.createNewRoom(newRoom);
-  res.status(201).send({status: data})
+  res.status(201).send({ status: data });
 });
 
 // app.post...... osv
 // socket.on in FÖRE db.collection
+
+app.delete("/rooms/:id", async (req, res) => {
+  console.log("i servern delete");
+
+  let roomId = req.params.id;
+  console.log(req.params.id);
+
+  const data = await MONGO_DB.deleteRoom(roomId);
+  console.log(data);
+
+  res.status(204).send({ status: data });
+});
 
 // Socket kommer från frontend
 io.on("connection", (socket) => {
@@ -48,8 +59,10 @@ io.on("connection", (socket) => {
   // Data i io.sockets.emit = samma som ovan
   // Den datan skickas tillbaka till frontend med socket.on("new message") i frontend
 
-  socket.on("send message", (data) => {
+  socket.on("send message", async (data) => {
     console.log("in send message", data);
+
+    // spara meddelande i rätt rum
 
     io.sockets.emit("new message", data);
     console.log("in new message", data);
@@ -64,9 +77,6 @@ http.listen(8080, () => {
 
 //app.use(express.static("./build")); //för att starta server och frontend samtidigt. OBS! Kör npm run build först, sen starta nodemon
 
-- Statuskoder för alla olika
-app.get("/rooms/:id", (req, res) => {}); 
-app.post("/rooms", (req, res) => {});
-app.delete("/rooms/:id", (req, res) => {});
+
 
 */
