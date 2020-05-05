@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import io from "socket.io-client";
 import axios from "axios";
 
 import RenderRooms from "./renderRooms.js";
@@ -15,7 +14,7 @@ export default function Chatview({ username, handleLogout, socket }) {
     axios
       .get("/rooms")
       .then((res) => {
-        console.log("RES.DATA", res.data);
+        console.log("RES.DATA GET/rooms", res.data);
         setRooms(res.data);
       })
       .catch((e) => {
@@ -29,7 +28,12 @@ export default function Chatview({ username, handleLogout, socket }) {
       <p>
         Hi <strong>{username}</strong>!
       </p>
-      <RenderRooms rooms={rooms} socket={socket} username={username} updateRooms={updateRooms}/>
+      <RenderRooms
+        rooms={rooms}
+        socket={socket}
+        username={username}
+        updateRooms={updateRooms}
+      />
       <hr />
       <button onClick={handleLogout}>Logout</button>
     </main>

@@ -1,39 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
+import RenderOneRoom from "./renderOneRoom";
 
 export default function RenderRooms({ rooms, socket, username, updateRooms }) {
   const [choosedRoom, setChoosedRoom] = useState({});
-  const [message, setMessage] = useState("");
   const [createdRoom, setCreatedRoom] = useState("");
 
-  function handleChange(e) {
-    setMessage(e.target.value);
-  }
-
-  function sendMessage(e) {
-    e.preventDefault();
-
-    if (message.trim().length === 0) {
-      setMessage("");
-      return;
-    }
-
-    socket.emit("send message", {
-      username: username,
-      message: message,
-      roomId: choosedRoom._id,
-    });
-    setMessage("");
-    console.log("sent a message: ", message);
-  }
-
-  /*  socket.on("new message", {
-      username: username,
-      message: message,
-    }); */
-
   function chooseRoom(room) {
-    console.log("clicked a room", room._id);
+    console.log("Choosed a room", room._id, room.messages);
     setChoosedRoom(room);
   }
 
@@ -42,11 +16,15 @@ export default function RenderRooms({ rooms, socket, username, updateRooms }) {
     console.log(createdRoom);
   }
 
-  function postCreatedRoom() {
+  function postCreatedRoom(e) {
+    e.preventDefault();
     axios
       .post("/rooms", { data: createdRoom })
       .then((res) => {
         console.log(createdRoom);
+        updateRooms();
+        setCreatedRoom("");
+
       })
       .catch((err) => {
         console.log("Error från frontend-post", err);
@@ -58,6 +36,7 @@ export default function RenderRooms({ rooms, socket, username, updateRooms }) {
       .delete("/rooms/" + room._id)
       .then((res) => {
         updateRooms();
+        setChoosedRoom("");
       })
       .catch((err) => {
         console.log("Error från frontend-delete", err);
@@ -67,13 +46,13 @@ export default function RenderRooms({ rooms, socket, username, updateRooms }) {
   const mappedRooms = rooms.map((room) => {
     return (
       <li key={room._id}>
-        <a
+        <span
           onClick={() => {
             chooseRoom(room);
           }}
         >
           {room.roomName}
-        </a>
+        </span>
         {!room.isDefault && (
           <button
             onClick={() => {
@@ -86,19 +65,6 @@ export default function RenderRooms({ rooms, socket, username, updateRooms }) {
       </li>
     );
   });
-
-  const mappedMessages =
-    choosedRoom.roomName &&
-    choosedRoom.messages.map((info, idx) => {
-      return (
-        <div key={idx} className="innerView__message">
-          <p>
-            <strong>{info.username}:</strong>
-          </p>
-          <p>{info.message}</p>
-        </div>
-      );
-    });
 
   return (
     <div className="renderRooms">
@@ -118,25 +84,11 @@ export default function RenderRooms({ rooms, socket, username, updateRooms }) {
           <button onClick={postCreatedRoom}>Create room</button>
         </form>
       </div>
-      {choosedRoom.roomName && (
-        <div>
-          <p>
-            You are in room: <strong>{choosedRoom.roomName}</strong>
-          </p>
-          <form>
-            <textarea
-              type="text"
-              placeholder="Type your message here"
-              autoFocus
-              onChange={handleChange}
-              value={message}
-            />
-            <br />
-            <button onClick={sendMessage}>Send</button>
-          </form>
-          <div className="chatview__inner">{mappedMessages}</div>
-        </div>
-      )}
+      <RenderOneRoom
+        username={username}
+        choosedRoomID={choosedRoom._id}
+        socket={socket}
+      />
     </div>
   );
 }

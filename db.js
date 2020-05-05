@@ -21,10 +21,22 @@ let db = client.db(dbName);
 async function getAllRooms() {
   try {
     const result = await db.collection("roomsCollection").find().toArray();
-    console.log("RESULT från DB.js", result);
     return result;
   } catch (error) {
     console.log("Cannot get all rooms", error);
+    throw error;
+  }
+}
+
+async function getOneRoom(roomId) {
+  try {
+    const result = await db
+      .collection("roomsCollection")
+      .find({ _id: ObjectId(roomId) })
+      .toArray();
+    return result;
+  } catch (error) {
+    console.log("Cannot get one room", error);
     throw error;
   }
 }
@@ -55,24 +67,26 @@ async function deleteRoom(roomId) {
   }
 }
 
-async function saveMessage() {}
+async function saveMessage(newMessage) {
+  try {
+    const result = await db.collection("roomsCollection").updateOne(
+      { _id: ObjectId(newMessage.roomId) },
+      {
+        $push: {
+          messages: newMessage,
+        },
+      }
+    );
+    return "Success in saving a new message";
+  } catch (error) {
+    console.log("Error", error);
+    throw error;
+  }
+}
 
 module.exports.getAllRooms = getAllRooms;
+module.exports.getOneRoom = getOneRoom;
 module.exports.createNewRoom = createNewRoom;
 module.exports.deleteRoom = deleteRoom;
 module.exports.saveMessage = saveMessage;
 
-/* module.exports = {
-  getClient: function () {
-    return client;
-  },
-  getDB: function () {
-    let client = module.exports.getClient();
-    let db = client.db(dbName);
-    return db;
-  },
-  createObjectId(id){
-      return new ObjectId(id);
-  }
-};
- */
