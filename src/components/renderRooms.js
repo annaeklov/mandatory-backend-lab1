@@ -18,13 +18,17 @@ export default function RenderRooms({ rooms, socket, username, updateRooms }) {
 
   function postCreatedRoom(e) {
     e.preventDefault();
+
+      if (createdRoom.trim().length === 0) {
+      setCreatedRoom("");
+      return;
+    }
     axios
       .post("/rooms", { data: createdRoom })
       .then((res) => {
         console.log(createdRoom);
         updateRooms();
         setCreatedRoom("");
-
       })
       .catch((err) => {
         console.log("Error från frontend-post", err);
@@ -55,6 +59,7 @@ export default function RenderRooms({ rooms, socket, username, updateRooms }) {
         </span>
         {!room.isDefault && (
           <button
+            className="deleteBtn"
             onClick={() => {
               deleteRoom(room);
             }}
@@ -67,21 +72,24 @@ export default function RenderRooms({ rooms, socket, username, updateRooms }) {
   });
 
   return (
-    <div className="renderRooms">
+    <div className="chatview__renderRooms">
       <div className="chatview__chooseRooms">
         <p>Choose a room:</p>
         <ul>{mappedRooms}</ul>
-        <p>Or create a new room:</p>
-        <form>
+        <form className="chatview__createRoom">
+          <p>Or create a new room:</p>
+
           <input
+            className="createRoom__form-inputField"
             type="text"
             placeholder="Room name here"
             autoFocus
             onChange={handleChangeCreateRoom}
             value={createdRoom}
           />
-          <br />
-          <button onClick={postCreatedRoom}>Create room</button>
+          <button className="createRoom__form-btn" onClick={postCreatedRoom}>
+            Create room
+          </button>
         </form>
       </div>
       <RenderOneRoom

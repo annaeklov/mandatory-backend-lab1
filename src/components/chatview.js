@@ -24,18 +24,19 @@ export default function Chatview({ username, handleLogout, socket }) {
 
   return (
     <main>
-      <h1 className="chatview__title">Chatview</h1>
-      <p>
-        Hi <strong>{username}</strong>!
-      </p>
+      <div className="chatview__top">
+        <p>
+          Hi <strong>{username}</strong>!
+        </p>
+      </div>
       <RenderRooms
         rooms={rooms}
         socket={socket}
         username={username}
         updateRooms={updateRooms}
       />
-      <hr />
-      <button onClick={handleLogout}>Logout</button>
+      <div className="logout__div">
+      <button className="logout__btn" onClick={handleLogout}>Logout</button></div>
     </main>
   );
 }

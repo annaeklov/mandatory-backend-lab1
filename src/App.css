@@ -1,35 +1,203 @@
 .App {
-  text-align: center;
-}
-
-span{
-  cursor: pointer;
-}
-
-span:hover{
-  text-decoration: underline;
-}
-
-.chatview__chooseRooms{
-  display: inline-block;
-  margin: 10px;
-  width: 200px;
-  height: 200px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100vw;
+  min-height: 100vh;
+  background-color: rgb(245, 245, 245);
 }
 
 .chatview__inner {
-  overflow: scroll;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  border: solid 2px #3A61A6;
+  width: 100%;
+  height: 65%;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.chatview__msgShow {
+  overflow-y: scroll;
   display: inline-block;
   margin: 10px;
   width: 300px;
-  height: 400px;
+  height: 300px;
   border: 1px solid black;
 }
 
-textarea {
-  width: 200px;
-  height: 100px;
+.chatview__top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 10%;
+}
+
+.chatview__top p {
+  margin-left: 10px;
+  font-size: 15px;
 }
 
 
 
+.deleteBtn {
+  margin-left: 10px;
+}
+
+
+footer {
+  height: 50px;
+  width: 100%;
+}
+
+header {
+  text-align: center;
+  width: 100%;
+}
+
+header h1 {
+  font-size: 60px;
+  margin: 20px;
+}
+
+.innerView__message {
+  margin: 5px;
+}
+
+.innerView__message-username {
+  color: rgb(29, 50, 85);
+  font-size: 15px;
+  margin: 0px 10px;
+  padding: 5px 0 0 0;
+  font-weight: bold;
+}
+
+.innerView__message-message {
+  font-size: 15px;
+  margin: 5px 5px 0px 5px;
+  padding: 8px;
+  word-wrap: break-word;
+}
+
+.login__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  height: 400px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 17px;
+  box-shadow: 0px 0px 15px -1px rgba(0, 0, 0, 0.351);
+}
+
+.login__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login__container-title {
+  margin: 60px 0 30px 0;
+}
+
+.login__form-inputField,
+.login__form-btn,
+.createRoom__form-inputField,
+.sendMsg__form-btn {
+  height: 30px;
+  width: 200px;
+  margin: 5px 5px 2px 5px;
+  border: solid 3px #3A61A6;
+  border-radius: 5px;
+}
+
+.login__form-inputField,
+.createRoom__form-inputField,
+.sendMsg__form-btn {
+  border: solid 1px #3A61A6;
+  padding: 3px 5px;
+}
+
+.login__form-btn,
+.sendMsg__form-btn {
+  border: solid 3px #3A61A6;
+  cursor: pointer;
+  color: rgb(13, 52, 148);
+  transform: translate(0, 0);
+  transition-duration: 0.1s;
+  outline: none;
+  font-size: 15px;
+}
+
+.login__form-btn:hover,
+.sendMsg__form-btn:hover {
+  transform: translate(0.1em, -0.1em);
+}
+
+.login__form-btn:active,
+.logout__btn:active,
+.createRoom__form-btn:active,
+.deleteBtn:active,
+.sendMsg__form-btn:active {
+  transition-duration: 0.1s;
+  transform: translate(0, 0);
+  background-color: rgba(255, 180, 50, 0.61);
+}
+
+.logout__btn,
+.deleteBtn,
+.createRoom__form-btn {
+  border: solid 1px #3A61A6;
+  margin-top: 3px;
+  cursor: pointer;
+  color: rgb(13, 52, 148);
+}
+
+.logout__btn:hover,
+.deleteBtn:hover,
+.createRoom__form-btn:hover {
+  transform: translate(0.1em, -0.1em);
+}
+
+.logout__div {
+  margin-top: 30px;
+  width: 200px;
+  padding: 10px;
+  border-top: solid 1px blue;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 500px;
+  height: 900px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 17px;
+  box-shadow: 0px 0px 15px -1px rgba(0, 0, 0, 0.351);
+}
+
+span {
+  cursor: pointer;
+}
+
+span:hover {
+  text-decoration: underline;
+}
+
+.sendMsg__form {
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  width: 90%;
+  height: 20%;
+}
+
+textarea {
+  width: 100%;
+  height: 100%;
+}

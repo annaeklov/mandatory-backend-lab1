@@ -47,6 +47,7 @@ export default function App() {
     <div className="App">
       <Header />
       {username ? chatview : login}
+      <footer></footer>
     </div>
   );
 }

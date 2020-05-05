@@ -48,10 +48,10 @@ export default function RenderOneRoom({ choosedRoomID, socket, username }) {
     choosedRoom.messages.map((info, idx) => {
       return (
         <div key={idx} className="innerView__message">
-          <p>
+          <p className="innerView__message-username">
             <strong>{info.username}:</strong>
           </p>
-          <p>{info.message}</p>
+          <p className="innerView__message-message">{info.message}</p>
         </div>
       );
     });
@@ -59,11 +59,12 @@ export default function RenderOneRoom({ choosedRoomID, socket, username }) {
   return (
     <>
       {choosedRoomID && (
-        <div>
+        <div className="chatview__inner">
           <p>
             You are in room: <strong>{choosedRoom.roomName}</strong>
           </p>
-          <form>
+          <div className="chatview__msgShow">{mappedMessages}</div>
+          <form className="sendMsg__form">
             <textarea
               type="text"
               placeholder="Type your message here"
@@ -71,10 +72,8 @@ export default function RenderOneRoom({ choosedRoomID, socket, username }) {
               onChange={handleChange}
               value={message}
             />
-            <br />
-            <button onClick={sendMessage}>Send</button>
+            <button className="sendMsg__form-btn" onClick={sendMessage}>Send</button>
           </form>
-          <div className="chatview__inner">{mappedMessages}</div>
         </div>
       )}
     </>
