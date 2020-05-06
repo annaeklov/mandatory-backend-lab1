@@ -48,6 +48,10 @@
   margin-left: 10px;
 }
 
+.errorP{
+  color: red;
+}
+
 
 footer {
   height: 50px;

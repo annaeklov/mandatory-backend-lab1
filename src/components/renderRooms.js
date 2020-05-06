@@ -5,6 +5,7 @@ import RenderOneRoom from "./renderOneRoom";
 export default function RenderRooms({ rooms, socket, username, updateRooms }) {
   const [choosedRoom, setChoosedRoom] = useState({});
   const [createdRoom, setCreatedRoom] = useState("");
+  const [roomNameIsValid, setRoomNameIsValid] = useState(true);
 
   function chooseRoom(room) {
     console.log("Choosed a room", room._id, room.messages);
@@ -13,20 +14,37 @@ export default function RenderRooms({ rooms, socket, username, updateRooms }) {
 
   function handleChangeCreateRoom(e) {
     setCreatedRoom(e.target.value);
-    console.log(createdRoom);
+  }
+
+  function validateRoomName(roomName) {
+    let isValid = true;
+
+    let removedWhiteSpace = roomName.trim();
+
+    rooms.filter((room) => {
+      if (room.roomName === removedWhiteSpace) {
+        return (isValid = false);
+      }
+      return null;
+    });
+    return isValid;
   }
 
   function postCreatedRoom(e) {
     e.preventDefault();
+    setRoomNameIsValid(true);
 
-      if (createdRoom.trim().length === 0) {
+    if (createdRoom.trim().length === 0) {
       setCreatedRoom("");
+      return;
+    }
+    if (!validateRoomName(createdRoom)) {
+      setRoomNameIsValid(false);
       return;
     }
     axios
       .post("/rooms", { data: createdRoom })
       .then((res) => {
-        console.log(createdRoom);
         updateRooms();
         setCreatedRoom("");
       })
@@ -91,6 +109,11 @@ export default function RenderRooms({ rooms, socket, username, updateRooms }) {
             Create room
           </button>
         </form>
+        <>
+          {!roomNameIsValid && (
+            <p className="errorP">Not a unique room name, try again</p>
+          )}
+        </>
       </div>
       <RenderOneRoom
         username={username}
