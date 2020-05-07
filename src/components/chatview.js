@@ -18,12 +18,17 @@ export default function Chatview({ username, handleLogout, socket }) {
         setRooms(res.data);
       })
       .catch((e) => {
-        console.log("Error från frontend", e);
+        console.log("Error from frontend", e);
       });
   }
 
   return (
     <main>
+      <div className="logout__div">
+        <button className="logout__btn" onClick={handleLogout}>
+          Logout
+        </button>
+      </div>
       <div className="chatview__top">
         <p>
           Hi <strong>{username}</strong>!
@@ -35,8 +40,6 @@ export default function Chatview({ username, handleLogout, socket }) {
         username={username}
         updateRooms={updateRooms}
       />
-      <div className="logout__div">
-      <button className="logout__btn" onClick={handleLogout}>Logout</button></div>
     </main>
   );
 }

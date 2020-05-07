@@ -1,7 +1,6 @@
 const mongo = require("mongodb");
 const MongoClient = mongo.MongoClient;
 const ObjectId = mongo.ObjectId;
-//const db = getDB();
 
 // Connection URL
 // Ska ofta (alltid) vara denna url
@@ -9,6 +8,7 @@ const url = "mongodb://localhost:27017";
 
 // Database name
 // Kan heta vad som helst
+// Heter labbDB nu
 const dbName = "labbDB";
 
 // Create a new MongoClient
@@ -28,6 +28,7 @@ async function getAllRooms() {
   }
 }
 
+// roomId kommer från servern
 async function getOneRoom(roomId) {
   try {
     const result = await db
@@ -47,7 +48,7 @@ async function createNewRoom(newRoom) {
     const result = await db.collection("roomsCollection").insert(newRoom);
     return "Success in creating a new room";
   } catch (error) {
-    console.log("Error", error);
+    console.log("Error in creating a new room", error);
     throw error;
   }
 }
@@ -62,7 +63,7 @@ async function deleteRoom(roomId) {
     }
     return "Could not find room";
   } catch (error) {
-    console.log("Error", error);
+    console.log("Error in deleting a room", error);
     throw error;
   }
 }

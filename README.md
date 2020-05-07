@@ -1,3 +1,6 @@
+## nodemon server.js 
+Write this in the terminal and it will start on [http://localhost:8080]
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

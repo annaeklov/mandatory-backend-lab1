@@ -8,7 +8,6 @@ export default function RenderRooms({ rooms, socket, username, updateRooms }) {
   const [roomNameIsValid, setRoomNameIsValid] = useState(true);
 
   function chooseRoom(room) {
-    console.log("Choosed a room", room._id, room.messages);
     setChoosedRoom(room);
   }
 
@@ -18,9 +17,7 @@ export default function RenderRooms({ rooms, socket, username, updateRooms }) {
 
   function validateRoomName(roomName) {
     let isValid = true;
-
     let removedWhiteSpace = roomName.trim();
-
     rooms.filter((room) => {
       if (room.roomName === removedWhiteSpace) {
         return (isValid = false);
@@ -43,13 +40,13 @@ export default function RenderRooms({ rooms, socket, username, updateRooms }) {
       return;
     }
     axios
-      .post("/rooms", { data: createdRoom })
+      .post("/rooms", { data: createdRoom }) // data är en nyckel, finns i app.post på server.js
       .then((res) => {
         updateRooms();
         setCreatedRoom("");
       })
       .catch((err) => {
-        console.log("Error från frontend-post", err);
+        console.log("Error from frontend-post", err);
       });
   }
 
@@ -61,7 +58,7 @@ export default function RenderRooms({ rooms, socket, username, updateRooms }) {
         setChoosedRoom("");
       })
       .catch((err) => {
-        console.log("Error från frontend-delete", err);
+        console.log("Error from frontend-delete", err);
       });
   }
 
@@ -94,27 +91,27 @@ export default function RenderRooms({ rooms, socket, username, updateRooms }) {
       <div className="chatview__chooseRooms">
         <p>Choose a room:</p>
         <ul>{mappedRooms}</ul>
-        <form className="chatview__createRoom">
-          <p>Or create a new room:</p>
-
-          <input
-            className="createRoom__form-inputField"
-            type="text"
-            placeholder="Room name here"
-            autoFocus
-            onChange={handleChangeCreateRoom}
-            value={createdRoom}
-          />
-          <button className="createRoom__form-btn" onClick={postCreatedRoom}>
-            Create room
-          </button>
-        </form>
-        <>
-          {!roomNameIsValid && (
-            <p className="errorP">Not a unique room name, try again</p>
-          )}
-        </>
       </div>
+      <form className="chatview__createRoom">
+        <p>Or create a new room:</p>
+
+        <input
+          className="createRoom__form-inputField"
+          type="text"
+          placeholder="Room name here"
+          autoFocus
+          onChange={handleChangeCreateRoom}
+          value={createdRoom}
+        />
+        <button className="createRoom__form-btn" onClick={postCreatedRoom}>
+          Create room
+        </button>
+      </form>
+      <>
+        {!roomNameIsValid && (
+          <p className="errorP">Not a unique room name, try again</p>
+        )}
+      </>
       <RenderOneRoom
         username={username}
         choosedRoomID={choosedRoom._id}

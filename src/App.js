@@ -10,7 +10,7 @@ import Chatview from "./components/chatview.js";
 const socket = io("http://localhost:8080");
 
 export default function App() {
-  const [username, setUsername] = useState("Anna");
+  const [username, setUsername] = useState("");
   const [inputValue, setInputValue] = useState("");
 
   function handleLogin(e) {

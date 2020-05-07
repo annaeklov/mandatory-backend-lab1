@@ -7,6 +7,9 @@ const io = require("socket.io")(http, { origins: "*:*" });
 
 app.use(express.json());
 
+app.use(express.static("./build"));
+
+// för att kunna använda funktioner i db.js
 const MONGO_DB = require("./db");
 
 /*-----------*/
@@ -32,7 +35,7 @@ app.get("/rooms/:id", async (req, res) => {
 
 app.post("/rooms", async (req, res) => {
   if (!req.body.data === String) {
-    return res.status(400).end(); // kolla rätt statuskod, kanske mer säker
+    return res.status(400).end();
   }
   let newRoom = {
     roomName: req.body.data,
@@ -40,7 +43,7 @@ app.post("/rooms", async (req, res) => {
     isDefault: false,
   };
   const data = await MONGO_DB.createNewRoom(newRoom);
-  res.status(201).send({ status: data });
+  res.status(201).send({ status: data }); // data är returnen i funktionen i db.js
 });
 
 app.delete("/rooms/:id", async (req, res) => {
@@ -56,7 +59,7 @@ io.on("connection", (socket) => {
   console.log("A user connected, id: ", socket.id);
 
   socket.on("send message", async (data) => {
-    await MONGO_DB.saveMessage(data);
+    await MONGO_DB.saveMessage(data); // Sparar till db
 
     io.sockets.emit("new message", data);
   });
@@ -70,8 +73,3 @@ http.listen(8080, () => {
 
 //app.use(express.static("./build")); //för att starta server och frontend samtidigt. OBS! Kör npm run build först, sen starta nodemon
 
-// Kommer en socket.emit("send message") från frontend, som hamnar här
-// Data i socket.on = objekt som innehåller namn, meddelande och roomId som kommer från frontend
-// io.socketSSSSSS betyder att alla som är uppkopplade får detta
-// Data i io.sockets.emit = samma som ovan
-// Den datan skickas tillbaka till frontend med socket.on("new message") i frontend
